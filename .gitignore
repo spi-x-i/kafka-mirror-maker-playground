@@ -1,2 +1,26 @@
 *.class
 *.log
+
+*.jar
+
+# sbt specific
+.cache
+.history
+.lib/
+dist/*
+target/
+lib_managed/
+src_managed/
+project/boot/
+project/plugins/project/
+project/target
+project/scalafmt
+
+# Scala-IDE specific
+.idea
+.idea_modules
+.scala_dependencies
+.worksheet
+
+# MacOS specific
+.DS_Store
