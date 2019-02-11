@@ -1,0 +1,36 @@
+version: '2'
+services:
+  zookeeper-source:
+    image: confluentinc/cp-zookeeper:4.0.0
+
+    hostname: zookeeper-source
+    environment:
+      ZOOKEEPER_CLIENT_PORT: 2181
+
+  kafka-source:
+    image: confluentinc/cp-kafka:4.0.0
+    hostname: kafka-source
+    depends_on:
+    - zookeeper-source
+    environment:
+      KAFKA_BROKER_ID: 1
+      KAFKA_ZOOKEEPER_CONNECT: 'zookeeper-source:2181'
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka-source:9092
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+
+  zookeeper-destination:
+    image: confluentinc/cp-zookeeper:4.0.0
+    hostname: zookeeper-destination
+    environment:
+      ZOOKEEPER_CLIENT_PORT: 2181
+
+  kafka-destination:
+    image: confluentinc/cp-kafka:4.0.0
+    hostname: kafka-destination
+    depends_on:
+    - zookeeper-destination
+    environment:
+      KAFKA_BROKER_ID: 1
+      KAFKA_ZOOKEEPER_CONNECT: 'zookeeper-destination:2181'
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka-destination:9092
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
